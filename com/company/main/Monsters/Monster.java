@@ -9,6 +9,11 @@ public class Monster {
     private String name;
 
     public Monster(String name, int lvl, int hp, int maxHp){
+        setName(name);
+        setLvl(lvl);
+        setHp(hp);
+        setMaxHp(maxHp);
+        exp = 0;
 
     }
 
@@ -54,5 +59,13 @@ public class Monster {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public int attack(){
+        int attackPower = (int)(Math.random()*getLvl()+1)+1;
+
+        if(attackPower > 45){
+            attackPower = 45;
+        }
     }
 }
