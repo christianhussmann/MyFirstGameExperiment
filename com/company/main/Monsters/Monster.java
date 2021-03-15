@@ -79,10 +79,16 @@ public class Monster {
     public String toString(){
         return "        "+name+"\t\t"+lvl+"     "+hp+"      "+maxHp+"       "+exp+"/"+lvl;
 
-
-
     }
 
+    public void levelUP(int exp, int lvl){
+        if(exp==lvl){
+            setLvl(lvl+1);
+            setExp(0);
+            setMaxHp(10*getLvl());
+            setHp(10*getLvl());
+        }
+    }
 
 
 }
