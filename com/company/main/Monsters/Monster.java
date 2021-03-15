@@ -66,6 +66,23 @@ public class Monster {
 
         if(attackPower > 45){
             attackPower = 45;
-        }
+        } else if (getLvl()>=10 && attackPower < 10){
+            attackPower = 10;
+        } else if (getLvl()<10 && attackPower < 10){
+
+        }return attackPower;
     }
+    public String lurkingFor(){
+        return "    "+name+"    "+lvl;
+    }
+
+    public String toString(){
+        return "    "+name+"\t\t"+lvl+"    "+hp+"    "+maxHp+"      "+exp+"/"+lvl;
+
+
+
+    }
+
+
+
 }
