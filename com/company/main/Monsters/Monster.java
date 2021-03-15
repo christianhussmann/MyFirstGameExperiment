@@ -73,11 +73,11 @@ public class Monster {
         }return attackPower;
     }
     public String lurkingFor(){
-        return "    "+name+"    "+lvl;
+        return "        "+name+"        "+lvl;
     }
 
     public String toString(){
-        return "    "+name+"\t\t"+lvl+"    "+hp+"    "+maxHp+"      "+exp+"/"+lvl;
+        return "        "+name+"\t\t"+lvl+"     "+hp+"      "+maxHp+"       "+exp+"/"+lvl;
 
 
 
