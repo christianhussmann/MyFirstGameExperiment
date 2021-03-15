@@ -43,10 +43,8 @@ public class Game {
                 break;
 
             case 3: Heal();
-                System.out.println("\nPress any key for the menu!");
-                option = reader.nextLine();
-                option = reader.nextLine();
-                break;
+
+
 
             case 4: BattleArena();
                 System.out.println("\nPress any key for the menu!");
@@ -57,13 +55,13 @@ public class Game {
         }
     }
     public static void monsterInventory(){
-        System.out.println("Nr. Name\t\tLevel  HP  maxHp  EXP\n");
+        System.out.println("Nr. Name\tLevel   HP   maxHp   EXP\n");
         System.out.println("-----------------------------------------------------------------------------");
 
         int i = 1;
 
         for( Monster pet : monsterList){
-            System.out.println(i++ +". "+pet.toString()+"\n");
+            System.out.println(i++ +". "+pet.toString());
         }
 
     }
@@ -113,10 +111,50 @@ public class Game {
     }
 
     public static void Heal(){
+        System.out.println("\nWhich Mehmon do you want to heal?");
+        monsterInventory();
+        Scanner reader = null;
+        reader = new Scanner(System.in);
+        int heal = reader.nextInt()-1;
+        int healing = monsterList[heal].getHp()+20;
+        monsterList[heal].setHp(healing);
+
+        if(healing>= monsterList[heal].getMaxHp()) {
+            monsterList[heal].setHp(monsterList[heal].getMaxHp());
+            System.out.println(monsterList[heal].getName() + "got " + healing + " HP from the heal.");
+        }
 
     }
 
     public static void BattleArena(){
+        try{
+
+            System.out.println("\nchoose your first Mehmon:");
+            monsterInventory();
+            Scanner reader = null;
+            reader = new Scanner(System.in);
+            int monster1 = reader.nextInt()-1;
+
+            Monster [] arena = new Monster[2];
+            arena[0] = monsterList[monster1];
+            System.out.println("You choose " +arena[0].getName() + " nice choice!");
+
+            System.out.println("\nchoose the second Mehmon:");
+            int monster2 = reader.nextInt()-1;
+            arena[1] = monsterList[monster2];
+            System.out.println("You choose " +arena[1].getName() + " nice choice!");
+            System.out.println("-------------------------------------------------------------------");
+            System.out.println(arena[0].getName() + " fight against " + arena[1].getName() + "!");
+
+            Battle(arena);
+
+
+
+
+
+        }catch(ArrayIndexOutOfBoundsException e){
+            System.out.println("You dont have that Mehmon.");
+        }
 
     }
     public static void Battle(Monster[] fightMonster){
@@ -133,6 +171,30 @@ public class Game {
                 System.out.println(fightMonster[1].getName()+" did "+fightMonster[0].getName()+" "+damage+ "damage.");
                 System.out.println(fightMonster[0].getName()+" now has "+fightMonster[0].getHp()+" Hp left.");
                 System.out.println("------------------------------------------");
+
+                Scanner reader = null;
+                reader = new Scanner(System.in);
+                String dummy = reader.nextLine();
+
+                if(dummy.equals("c")){
+                    System.out.println("Catch the Mehmon!");
+                    int random = (int)(Math.random()*fightMonster[0].getMaxHp())+1;
+                    if(random>=fightMonster[0].getHp()*2){
+                        System.out.println("You got the Mehmon. Congrats!");
+                        System.out.println("--------------------------------");
+                        fightMonster[0].setHp(0);
+                        Monster [] newList = new Monster[monsterList.length+1];
+
+                        for( int i=0; i<monsterList.length;i++){
+                            newList[i] = monsterList[i];
+                        }
+                        newList[newList.length-1] = fightMonster[0];
+                        monsterList = newList;
+
+                    }else{
+                        System.out.println("Sorry, you did not catch the Mehmon.");
+                    }
+                }
             }
         }
 
@@ -148,6 +210,8 @@ public class Game {
             fightMonster[0].setHp(1);
             fightMonster[1].setExp(fightMonster[1].getExp()+1);
             fightMonster[1].levelUP(fightMonster[1].getExp(), fightMonster[1].getLvl());
+        } else{
+            monsterInventory();
         }
     }
 }
